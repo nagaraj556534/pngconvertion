@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>PNG to JPG Conversion</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+  </head>
+  <body>
+    
+    <div class="nav">
+    <form>
+      <h1>PNG to JPG converter</h1>
+      <input type="file" id="image" accept=".png">
+      <br><br>
+      <p id="errorMessage" style="display:none; color:red"></p>
+      <button id="convert-btn" type="submit">Convert to JPG</button>
+    </form>
+
+    <script>
+      const convertBtn = document.querySelector('#convert-btn');
+      const imageInput = document.querySelector('#image');
+
+      convertBtn.addEventListener('click', function(event) {
+        event.preventDefault();
+
+        const image = imageInput.files[0];
+        if (!image) {
+          alert('Please select an image');
+          return;
+        }
+
+        const imageType = image.type;
+        if (imageType !== 'image/png') {
+          alert('Selected image is not a PNG format');
+          return;
+        }
+
+        const imageSize = image.size / 1024 / 1024;
+        if (imageSize > 5) {
+          alert('Selected image is larger than 5 MB');
+          return;
+        }
+
+        const formData = new FormData();
+        formData.append('image', image);
+
+        const xhr = new XMLHttpRequest();
+        xhr.open('POST', '/api/pngtojpg', true);
+        xhr.responseType = 'blob';
+        xhr.onload = function() {
+          if (this.status === 200) {
+            const blob = new Blob([xhr.response], {type: 'image/jpeg'});
+            const link = document.createElement('a');
+            link.href = window.URL.createObjectURL(blob);
+            link.download = 'converted.jpeg';
+            link.click();
+          }
+        };
+        xhr.send(formData);
+      });
+    </script>
+    </div>
+    <div class="navbar">
+      <ul>
+          <li><a href="/">Home</a></li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Tools</a>
+            <div class="dropdown-content">
+              <a href="/jpgtopng">JPG to PNG</a>
+              <a href="/pngtojpg">PNG to JPG</a>
+              <a href="/webptopng">WEBP to PNG</a>
+              <a href="/bmptopng">BMP to PNG</a>
+              <a href="/pngtopdf">PNG to PDF</a>
+              <a href="/jpgtopdf">JPG to PDF</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+  </body>
+</html>

@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>BMP to PNG Conversion</title>
+  <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+
+  <style> button[type="button"] {
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border-radius: 5px;
+    border: none;
+    cursor: pointer;
+  }</style>
+
+</head>
+<body>
+  <div class="nav">
+  <form>
+    <h1>BMP to PNG converter</h1>
+    <div>
+      <input type="file" id="bmpFile" accept=".bmp"/>
+    </div>
+    <div id="error" style="color:red;"></div>
+    <div class="button">
+      <button type="button" onclick="convertToPNG()">Convert to PNG</button>
+    </div>
+  </form>
+  
+  <script>
+    function convertToPNG() {
+      const bmpFile = document.getElementById("bmpFile").files[0];
+      const errorEl = document.getElementById("error");
+      
+      errorEl.innerHTML = "";
+      
+      if (!bmpFile) {
+        errorEl.innerHTML = "Please select a BMP file to convert.";
+        return;
+      }
+      
+      if (bmpFile.type !== "image/bmp") {
+        errorEl.innerHTML = "Selected file is not a BMP file.";
+        return;
+      }
+      
+      if (bmpFile.size > 5 * 1024 * 1024) {
+        errorEl.innerHTML = "File size must be less than 5 MB.";
+        return;
+      }
+      
+      const formData = new FormData();
+      formData.append("bmpFile", bmpFile);
+      
+      const xhr = new XMLHttpRequest();
+      xhr.open("POST", "/api/bmptopng");
+      xhr.responseType = "blob";
+      xhr.onload = function() {
+        if (xhr.status === 200) {
+          const blob = xhr.response;
+          const link = document.createElement("a");
+          link.href = URL.createObjectURL(blob);
+          link.download = "converted.png";
+          link.click();
+        } else {
+          errorEl.innerHTML = "Conversion failed. Please try again.";
+        }
+      };
+      xhr.send(formData);
+    }
+  </script>
+  </div>
+  <div class="navbar">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Tools</a>
+          <div class="dropdown-content">
+            <a href="/jpgtopng">JPG to PNG</a>
+            <a href="/pngtojpg">PNG to JPG</a>
+            <a href="/webptopng">WEBP to PNG</a>
+            <a href="/bmptopng">BMP to PNG</a>
+            <a href="/pngtopdf">PNG to PDF</a>
+            <a href="/jpgtopdf">JPG to PDF</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>JPG to PNG Conversion</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+  </head>
+  <body>
+    <div class="nav">
+    <form action="/api/jpgtopng" method="POST" enctype="multipart/form-data">
+      <h1>JPG to PNG converter</h1>
+      <input type="file" id="image-file" name="image">
+      <br><br>
+      <div id="error-message" style="color: red;"></div>
+      <button id="convert-btn" type="submit" onclick="return checkImage()">Convert to PNG</button>
+    </form>
+ 
+    
+
+
+    <script>
+      function checkImage() {
+        let fileInput = document.getElementById("image-file");
+        let file = fileInput.files[0];
+        let errorMessage = document.getElementById("error-message");
+        errorMessage.innerHTML = "";
+
+        if (!file) {
+          errorMessage.innerHTML = "Please select an image.";
+          return false;
+        }
+
+        if (file.type !== "image/jpeg") {
+          errorMessage.innerHTML = "Please select a JPG image.";
+          return false;
+        }
+
+        if (file.size > 5 * 1024 * 1024) {
+          errorMessage.innerHTML = "Please select an image that is less than 5 MB.";
+          return false;
+        }
+
+        return true;
+      }
+    </script>
+    </div>
+    <div class="navbar">
+      <ul>
+          <li><a href="/">Home</a></li>
+          <li class="dropdown">
+            <a href="javascript:void(0)" class="dropbtn">Tools</a>
+            <div class="dropdown-content">
+              <a href="/jpgtopng">JPG to PNG</a>
+              <a href="/pngtojpg">PNG to JPG</a>
+              <a href="/webptopng">WEBP to PNG</a>
+              <a href="/bmptopng">BMP to PNG</a>
+              <a href="/pngtopdf">PNG to PDF</a>
+              <a href="/jpgtopdf">JPG to PDF</a>
+            </div>
+          </li>
+        </ul>
+      </div>
+  </body>
+</html>

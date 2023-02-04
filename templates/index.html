@@ -1,19 +1,24 @@
-<head>
-    <title>{{ title }}</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='main.css') }}">
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Image Converter</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
 
-<body>
-    <div class="App">
-        <header class="App-header">
-            <img src="{{ url_for('static', filename='Octocat.png') }}" class="App-logo" alt="logo" />
-            <p>
-                GitHub Codespaces <span class="heart">♥️</span> Flask
-            </p>
-            <p class="small">
-                Edit <code>templates/index.html</code> and refresh to see your changes!
-            </p>
-        </header>
+  </head>
+  <body>
+    <div class="nav">
+      <form>
+    <h1>Image Converter</h1>
+    <div>
+      <ul>
+        <li><a href="/jpgtopng">JPG to PNG</a></li>
+        <li><a href="/pngtojpg">PNG to JPG</a></li>
+        <li><a href="/webptopng">WEBP to PNG</a></li>
+        <li><a href="/bmptopng">BMP to PNG</a></li>
+        <li><a href="/pngtopdf">PNG to PDF</a></li>
+      </ul>
     </div>
-</body>
-
+  </form>
+  </div>
+  </body>
 </html>

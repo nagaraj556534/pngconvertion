@@ -1,0 +1,87 @@
+<html>
+  <head>
+    <title>WEBP to PNG Conversion</title>
+    <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
+    <style> button[type="button"] {
+      padding: 10px 20px;
+      background-color: blue;
+      color: white;
+      border-radius: 5px;
+      border: none;
+      cursor: pointer;
+    }</style>
+  </head>
+  <body>
+    <div class="nav">
+    <form id="webp-form">
+      <h1>WEBP to PNG converter</h1>
+      <input type="file" id="webp-image" accept="image/webp">
+      <br><br>
+      
+      <p id="error-message" style="color:red;"></p>
+      <button type="button" id="convert-button">Convert to PNG</button>
+      
+    </form>
+  </div>
+  <div class="navbar">
+    <ul>
+        <li><a href="/">Home</a></li>
+        <li class="dropdown">
+          <a href="javascript:void(0)" class="dropbtn">Tools</a>
+          <div class="dropdown-content">
+            <a href="/jpgtopng">JPG to PNG</a>
+            <a href="/pngtojpg">PNG to JPG</a>
+            <a href="/webptopng">WEBP to PNG</a>
+            <a href="/bmptopng">BMP to PNG</a>
+            <a href="/pngtopdf">PNG to PDF</a>
+            <a href="/jpgtopdf">JPG to PDF</a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </body>
+  <script>
+    const form = document.getElementById("webp-form");
+    const imageInput = document.getElementById("webp-image");
+    const convertButton = document.getElementById("convert-button");
+    const errorMessage = document.getElementById("error-message");
+
+    convertButton.onclick = async (event) => {
+      event.preventDefault();
+
+      const image = imageInput.files[0];
+      if (!image) {
+        errorMessage.innerText = "Please select an image.";
+        return;
+      }
+
+      if (image.type !== "image/webp") {
+        errorMessage.innerText = "Selected file is not a webp image.";
+        return;
+      }
+
+      if (image.size > 5 * 1024 * 1024) {
+        errorMessage.innerText = "Image size is greater than 5 MB.";
+        return;
+      }
+
+      const formData = new FormData();
+      formData.append("image", image);
+
+      const response = await fetch("/api/webptopng", {
+        method: "POST",
+        body: formData
+      });
+
+      const responseBlob = await response.blob();
+      const url = URL.createObjectURL(responseBlob);
+      const a = document.createElement("a");
+      a.style.display = "none";
+      a.href = url;
+      a.download = "converted.png";
+      document.body.appendChild(a);
+      a.click();
+      URL.revokeObjectURL(url);
+    };
+  </script>
+</html>
