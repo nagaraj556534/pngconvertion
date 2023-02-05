@@ -1,7 +1,5 @@
 
 import io
-from os import sendfile
-
 from flask import Flask, request, Response , render_template
 from PIL import Image
 import img2pdf
@@ -123,7 +121,7 @@ def bmp_to_png():
                 image = image.convert('RGBA')
                 image.save(output, format='PNG')
                 output.seek(0)
-                return sendfile(output, as_attachment=True, attachment_filename='converted.png', mimetype='image/png')
+                return Response(output, as_attachment=True, attachment_filename='converted.png', mimetype='image/png')
             else:
                 return 'Error: Image size exceeds 5 MB'
         else:
