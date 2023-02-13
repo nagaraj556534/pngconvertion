@@ -1,41 +1,32 @@
-body{
-    background-image: url("/static/image/back.jpg");
-    height: 100vh;
+html,body{
+    
     background-repeat:no-repeat;
     background-size:cover;
+    background-color: #1983da;
+    
   }
-   nav {
+  
+  .navbar {
     display: flex;
     justify-content: center;
     align-items: center;
     height: 100vh;
+    background-color: #1983da;
   }
   form {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background-color: transparent;
-    padding: 50px;
+    background-color: black;
+    padding: 10px;
+    width: 50%;
+    align-items: center;
+    align-content: center;
+    align-self: center;
     border-radius: 10px;
-    text-emphasis-color:white;
-    justify-content: center;
-    height: 70vh;
-    background-color: rgb(0,0,0); /* Fallback color */
-background-color: rgba(0,0,0, 0.4); /* Black w/opacity/see-through */
-color: white;
-font-weight: bold;
-border: 3px solid transparent;
-position: absolute;
-top: 50%;
-left: 50%;
-transform: translate(-50%, -50%);
-z-index: 2;
-width: 25%;
-height: inherit;
-padding: 20px;
-text-align: center;
-    
-  }
+    }
+  
+  
   input[type="file"] {
     padding: 40px 10px;
     margin-bottom: 20px;
@@ -102,4 +93,72 @@ color:white;
 
 .dropdown:hover .dropdown-content {
 display: block;
+}
+@media only screen and (max-width: 600px) {
+ body{
+  width: auto;
+ }
+  form {
+    width: auto;
+  }
+  .form-input {
+    width: auto;
+  }
+  .navbar {
+    width: auto;
+    height: inherit;
+  }
+  
+ 
+
+  
+}
+
+
+
+.center {
+  height:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+}
+.form-input {
+  width:300px;
+  padding:10px;
+  background:transparent;
+  box-shadow: -3px -3px 7px rgba(94, 104, 121, 0.377),
+              3px 3px 7px rgba(94, 104, 121, 0.377);
+}
+.form-input img {
+  width:100%;
+  display:none;
+  margin-bottom:30px;
+}
+.form-input input {
+  display:none;
+}
+
+.form-input label {
+  display:block;
+  width:45%;
+  height:45px;
+  margin-left: 25%;
+  line-height:50px;
+  text-align:center;
+  background:#1172c2;
+  color:#fff;
+  font-size:15px;
+  font-family:"Open Sans",sans-serif;
+  text-transform:Uppercase;
+  font-weight:600;
+  border-radius:5px;
+  cursor:pointer;
+}
+main{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  background:#603280;
 }

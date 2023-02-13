@@ -1,18 +1,58 @@
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>PNG to PDF Conversion</title>
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
   </head>
   <body>
 
-    
-<div class="nav">
-    <form>
-      <h1>PNG to PDF converter</h1>
-      <input type="file" id="fileInput" accept=".png"/>
-      <p id="errorMessage" style="display:none; color:red"></p>
-      <button type="submit">Convert to PDF</button>
-    </form>
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Tools</a>
+        <div class="dropdown-content">
+          <a href="/jpgtopng">JPG to PNG</a>
+          <a href="/pngtojpg">PNG to JPEG</a>
+          <a href="/webptopng">WEBP to PNG</a>
+          <a href="/bmptopng">BMP to PNG</a>
+          <a href="/pngtopdf">PNG to PDF</a>
+          <a href="/jpgtopdf">JPG to PDF</a>
+        </div>
+      </li>
+    </ul>
+
+    <div class="navbar">
+      <form>
+        <h1>PNG to PDF converter</h1>
+        <div class="container">
+        <div class="center"> 
+        <div class="form-input">
+          <div class="preview">
+            <img id="fileInput-preview">
+          </div>
+          <label for="fileInput">Upload Image</label>
+          <input type="file" id="fileInput" accept=".png" onchange="showPreview(event);">
+      
+        </div>
+      </div>
+      </div>
+        <br><br>
+        <p id="errorMessage" style="display:none; color:red"></p>
+        <button id="convert-btn" type="submit">Convert to PDF</button>
+      
+      </form>
+  
+</div>
+<script> function showPreview(event){
+  if(event.target.files.length > 0){
+    var src = URL.createObjectURL(event.target.files[0]);
+    var preview = document.getElementById("fileInput-preview");
+    preview.src = src;
+    preview.style.display = "block";
+  }
+}</script>
+
+
     <script>
       const form = document.querySelector("form");
       form.addEventListener("submit", async (event) => {
@@ -51,22 +91,9 @@
         }
       });
     </script>
-    </div>
-    <div class="navbar">
-      <ul>
-          <li><a href="/">Home</a></li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Tools</a>
-            <div class="dropdown-content">
-              <a href="/jpgtopng">JPG to PNG</a>
-              <a href="/pngtojpg">PNG to JPG</a>
-              <a href="/webptopng">WEBP to PNG</a>
-              <a href="/bmptopng">BMP to PNG</a>
-              <a href="/pngtopdf">PNG to PDF</a>
-              <a href="/jpgtopdf">JPG to PDF</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+   
+    
+      
+    
   </body>
 </html>

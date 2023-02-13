@@ -1,19 +1,58 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>JPG to PNG Conversion</title>
+    <link rel="stylesheet" href="/static/css/style.css">
     <link rel="stylesheet" href="{{url_for('static',filename='css/style.css')}}">
   </head>
   <body>
-    <div class="nav">
-    <form action="/api/jpgtopng" method="POST" enctype="multipart/form-data">
-      <h1>JPG to PNG converter</h1>
-      <input type="file" id="image-file" name="image">
-      <br><br>
-      <div id="error-message" style="color: red;"></div>
-      <button id="convert-btn" type="submit" onclick="return checkImage()">Convert to PNG</button>
-    </form>
+
+    <ul>
+      <li><a href="/">Home</a></li>
+      <li class="dropdown">
+        <a href="javascript:void(0)" class="dropbtn">Tools</a>
+        <div class="dropdown-content">
+          <a href="/jpgtopng">JPG to PNG</a>
+          <a href="/pngtojpg">PNG to JPEG</a>
+          <a href="/webptopng">WEBP to PNG</a>
+          <a href="/bmptopng">BMP to PNG</a>
+          <a href="/pngtopdf">PNG to PDF</a>
+          <a href="/jpgtopdf">JPG to PDF</a>
+        </div>
+      </li>
+    </ul>
  
+    <div class="navbar">
+      <form action="/api/jpgtopng" method="POST" enctype="multipart/form-data">
+        <h1>JPG to PNG converter</h1>
+        <div class="container">
+        <div class="center"> 
+        <div class="form-input">
+          <div class="preview">
+            <img id="image-file-preview">
+          </div>
+          <label for="image-file">Upload Image</label>
+          <input type="file" id="image-file" name="image" accept=".jpg" onchange="showPreview(event);">
+      
+        </div>
+      </div>
+      </div>
+        <br><br>
+        <div id="error-message" style="color: red;"></div>
+        <button id="convert-btn" type="submit" onclick="return checkImage()">Convert to PNG</button>
+      
+      </form>
+  
+</div>
+<script> function showPreview(event){
+  if(event.target.files.length > 0){
+    var src = URL.createObjectURL(event.target.files[0]);
+    var preview = document.getElementById("image-file-preview");
+    preview.src = src;
+    preview.style.display = "block";
+  }
+}</script>
     
 
 
@@ -42,22 +81,9 @@
         return true;
       }
     </script>
-    </div>
-    <div class="navbar">
-      <ul>
-          <li><a href="/">Home</a></li>
-          <li class="dropdown">
-            <a href="javascript:void(0)" class="dropbtn">Tools</a>
-            <div class="dropdown-content">
-              <a href="/jpgtopng">JPG to PNG</a>
-              <a href="/pngtojpg">PNG to JPG</a>
-              <a href="/webptopng">WEBP to PNG</a>
-              <a href="/bmptopng">BMP to PNG</a>
-              <a href="/pngtopdf">PNG to PDF</a>
-              <a href="/jpgtopdf">JPG to PDF</a>
-            </div>
-          </li>
-        </ul>
-      </div>
+    
+    
+     
+     
   </body>
 </html>
