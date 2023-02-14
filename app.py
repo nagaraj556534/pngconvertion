@@ -13,8 +13,8 @@ app = Flask(__name__)
 def index():
     return render_template("index.html")
 
-@app.route("/test", methods=["GET"])
-def test():
+@app.route("/tests", methods=["GET"])
+def tests():
     return render_template("index.html")
 
 @app.route("/jpgtopng", methods=["GET"])
